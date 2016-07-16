@@ -7,21 +7,26 @@
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 		<link href="http://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="{% static 'css/blog.css' %}">
-		<title>Django Girls Blog</title>
+		<title>小猪带孩子先走</title>
 	</head>
 	<body>
-	     <div class="page-header">
-	       <a href="{% url 'blog.views.post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
-	       <a href="{% url 'post_draft_list' %}" class="top-menu"><span class="glyphicon glyphicon-edit"></span></a>
-	       <h1><a href="/">Django Girls Blog</a></h1>
-	     </div>
-	     <div class="content">
-		   <div class="row">
-			   <div class="col-md-8">
-			      {% block content %}
-			      {% endblock %}			      
-			   </div>
-		   </div>
-	     </div>
+		<div class="page-header">
+			{% if user.is_authenticated %}
+			<a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+			<a href="{% url 'post_draft_list' %}" class="top-menu"><span class="glyphicon glyphicon-edit"></span></a>
+			<p class="top-menu">Hello {{ user.username }}<small>&nbsp;<a href="{% url 'django.contrib.auth.views.logout' %}">Log out</a></p>
+			{% else %}
+			<a href="{% url 'django.contrib.auth.views.login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
+			{% endif %}
+			<h1><a href="{% url 'blog.views.post_list' %}">小猪带孩子先走</a></h1>
+		</div>
+		<div class="content">
+			<div class="row">
+				<div class="col-md-8">
+					{% block content %}
+					{% endblock %}
+				</div>
+			</div>
+		</div>
 	</body>
 </html>
